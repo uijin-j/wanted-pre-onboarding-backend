@@ -62,7 +62,7 @@ public class JobOpening extends BaseTimeEntity {
         this.company = company;
     }
 
-    public void updateJobOpening(JobOpeningUpdateRequest request) {
+    public void update(JobOpeningUpdateRequest request) {
         validateTitle(request.title());
         validatePosition(request.position());
         validateTechStack(request.techStack());
