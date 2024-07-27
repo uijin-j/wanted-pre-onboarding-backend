@@ -19,6 +19,7 @@ public class JobOpeningService {
     private final CompanyRepository comanyRepository;
     private final JobOpeningRepository jobOpeningRepository;
 
+    @Transactional
     public JobOpeningResponse createJobOpening(JobOpeningCreateRequest request) {
         Company company = comanyRepository.findById(request.companyId())
             .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회사입니다."));
