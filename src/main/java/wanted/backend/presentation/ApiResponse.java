@@ -30,6 +30,10 @@ public class ApiResponse<T> {
         return of(HttpStatus.OK, data);
     }
 
+    public static ApiResponse<Void> noContent() {
+        return of(HttpStatus.NO_CONTENT, null);
+    }
+
     public static <T> ApiResponse<T> error(HttpStatus httpStatus, String message) {
         return of(httpStatus, message, null);
     }

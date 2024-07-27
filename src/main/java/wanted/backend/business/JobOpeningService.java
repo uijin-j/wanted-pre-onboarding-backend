@@ -46,4 +46,9 @@ public class JobOpeningService {
 
         return JobOpeningResponse.from(jobOpening);
     }
+
+    @Transactional
+    public void delete(Long id) {
+        jobOpeningRepository.findById(id).ifPresent(jobOpeningRepository::delete);
+    }
 }
