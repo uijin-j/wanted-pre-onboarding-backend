@@ -5,13 +5,16 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import wanted.backend.domain.Company;
+import wanted.backend.domain.User;
 import wanted.backend.persistence.CompanyRepository;
+import wanted.backend.persistence.UserRepository;
 
 @Component
 @RequiredArgsConstructor
 public class DummyDataLoader implements ApplicationRunner {
 
     private final CompanyRepository companyRepository;
+    private final UserRepository userRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -22,6 +25,12 @@ public class DummyDataLoader implements ApplicationRunner {
             .city("서울")
             .build();
 
+        User user = User
+            .builder()
+            .name("정의진")
+            .build();
+
         companyRepository.save(company);
+        userRepository.save(user);
     }
 }
