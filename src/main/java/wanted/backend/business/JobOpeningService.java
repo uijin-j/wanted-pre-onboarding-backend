@@ -1,6 +1,7 @@
 package wanted.backend.business;
 
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +11,7 @@ import wanted.backend.domain.Company;
 import wanted.backend.domain.JobOpening;
 import wanted.backend.dto.request.JobOpeningCreateRequest;
 import wanted.backend.dto.request.JobOpeningUpdateRequest;
+import wanted.backend.dto.response.JobOpeningDetail;
 import wanted.backend.dto.response.JobOpeningResponse;
 import wanted.backend.dto.response.JobOpeningSummary;
 import wanted.backend.persistence.CompanyRepository;
@@ -58,5 +60,25 @@ public class JobOpeningService {
     public Page<JobOpeningSummary> getJobOpenings(Pageable pageable) {
         return jobOpeningRepository.findAll(pageable)
             .map(JobOpeningSummary::from);
+    }
+
+    public JobOpeningDetail getInfo(Long id) {
+        JobOpening jobOpening = jobOpeningRepository.findByIdWithCompany(id)
+            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 채용공고입니다."));
+
+        List<Long> otherJobOpeningIds = getOthersForCompany(jobOpening);
+
+        return JobOpeningDetail.of(jobOpening, otherJobOpeningIds);
+    }
+
+    private List<Long> getOthersForCompany(JobOpening jobOpening) {
+        List<Long> jobOpenings = getAllByCompany(jobOpening.getCompany());
+        jobOpenings.remove(jobOpening.getId());
+
+        return jobOpenings;
+    }
+
+    private List<Long> getAllByCompany(Company company) {
+        return jobOpeningRepository.findIdsByCompany(company);
     }
 }
