@@ -8,6 +8,7 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import wanted.backend.domain.common.BaseTimeEntity;
 import wanted.backend.domain.vo.Address;
 
 @Entity
+@Table(name = "company")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Company extends BaseTimeEntity {
