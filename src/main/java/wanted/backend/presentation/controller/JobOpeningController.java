@@ -2,8 +2,11 @@ package wanted.backend.presentation.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,6 +18,7 @@ import wanted.backend.business.JobOpeningService;
 import wanted.backend.dto.request.JobOpeningCreateRequest;
 import wanted.backend.dto.request.JobOpeningUpdateRequest;
 import wanted.backend.dto.response.JobOpeningResponse;
+import wanted.backend.dto.response.JobOpeningSummary;
 import wanted.backend.presentation.ApiResponse;
 
 @RestController
@@ -48,5 +52,12 @@ public class JobOpeningController {
     public ApiResponse<Void> deleteJobOpening(@PathVariable Long id) {
         jobOpeningService.delete(id);
         return ApiResponse.noContent();
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse<Page<JobOpeningSummary>> getJobOpenings(Pageable pageable) {
+        Page<JobOpeningSummary> response = jobOpeningService.getJobOpenings(pageable);
+        return ApiResponse.ok(response);
     }
 }

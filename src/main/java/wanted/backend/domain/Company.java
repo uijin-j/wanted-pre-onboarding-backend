@@ -29,6 +29,7 @@ public class Company extends BaseTimeEntity {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
     @Embedded
+    @Getter(AccessLevel.NONE)
     private Address address;
 
     @Builder
@@ -38,6 +39,14 @@ public class Company extends BaseTimeEntity {
         this.name = name;
         this.description = description;
         this.address = Address.of(country, city);
+    }
+
+    public String getCountry() {
+        return address.getCountry();
+    }
+
+    public String getCity() {
+        return address.getCity();
     }
 
     private void validateName(String name) {

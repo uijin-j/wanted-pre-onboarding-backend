@@ -2,6 +2,8 @@ package wanted.backend.business;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wanted.backend.domain.Company;
@@ -9,6 +11,7 @@ import wanted.backend.domain.JobOpening;
 import wanted.backend.dto.request.JobOpeningCreateRequest;
 import wanted.backend.dto.request.JobOpeningUpdateRequest;
 import wanted.backend.dto.response.JobOpeningResponse;
+import wanted.backend.dto.response.JobOpeningSummary;
 import wanted.backend.persistence.CompanyRepository;
 import wanted.backend.persistence.JobOpeningRepository;
 
@@ -50,5 +53,10 @@ public class JobOpeningService {
     @Transactional
     public void delete(Long id) {
         jobOpeningRepository.findById(id).ifPresent(jobOpeningRepository::delete);
+    }
+
+    public Page<JobOpeningSummary> getJobOpenings(Pageable pageable) {
+        return jobOpeningRepository.findAll(pageable)
+            .map(JobOpeningSummary::from);
     }
 }
