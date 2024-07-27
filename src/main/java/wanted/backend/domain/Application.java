@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import wanted.backend.domain.common.BaseTimeEntity;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

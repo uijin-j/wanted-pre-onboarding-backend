@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import wanted.backend.domain.common.BaseTimeEntity;
 import wanted.backend.domain.vo.Address;
 
 @Entity
