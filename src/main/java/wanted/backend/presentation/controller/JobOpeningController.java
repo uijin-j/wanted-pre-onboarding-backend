@@ -25,7 +25,7 @@ public class JobOpeningController {
     public ApiResponse<JobOpeningResponse> createJobOpening(
         @RequestBody @Valid JobOpeningCreateRequest request
     ) {
-        JobOpeningResponse response = jobOpeningService.createJobOpening(request);
+        JobOpeningResponse response = jobOpeningService.post(request);
         return ApiResponse.ok(response);
     }
 
@@ -34,7 +34,7 @@ public class JobOpeningController {
         @PathVariable Long id,
         @RequestBody @Valid JobOpeningUpdateRequest request
     ) {
-        JobOpeningResponse response = jobOpeningService.updateJobOpening(id, request);
+        JobOpeningResponse response = jobOpeningService.update(id, request);
         return ApiResponse.ok(response);
     }
 }

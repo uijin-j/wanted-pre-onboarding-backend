@@ -21,7 +21,7 @@ public class JobOpeningService {
     private final JobOpeningRepository jobOpeningRepository;
 
     @Transactional
-    public JobOpeningResponse createJobOpening(JobOpeningCreateRequest request) {
+    public JobOpeningResponse post(JobOpeningCreateRequest request) {
         Company company = comanyRepository.findById(request.companyId())
             .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회사입니다."));
 
@@ -38,7 +38,7 @@ public class JobOpeningService {
     }
 
     @Transactional
-    public JobOpeningResponse updateJobOpening(Long id, JobOpeningUpdateRequest request) {
+    public JobOpeningResponse update(Long id, JobOpeningUpdateRequest request) {
         JobOpening jobOpening = jobOpeningRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 채용공고입니다."));
 
