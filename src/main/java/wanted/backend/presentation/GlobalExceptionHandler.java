@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RequiredArgsConstructor
 @Slf4j
 public class GlobalExceptionHandler {
+
     private final MessageSource messageSource;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

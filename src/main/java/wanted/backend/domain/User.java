@@ -11,7 +11,9 @@ import wanted.backend.domain.common.BaseTimeEntity;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseTimeEntity {
-    @Id @GeneratedValue
+
+    @Id
+    @GeneratedValue
     @Column(name = "id")
     private Long id;
     @Column(name = "name", length = 50, nullable = false)

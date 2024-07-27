@@ -1,19 +1,17 @@
 package wanted.backend.domain.vo;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static io.micrometer.common.util.StringUtils.isBlank;
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Address {
+
     public static final Address EMPTY = new Address("", "");
 
     @Column(name = "country")

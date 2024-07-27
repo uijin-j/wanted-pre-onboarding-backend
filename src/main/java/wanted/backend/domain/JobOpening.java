@@ -23,7 +23,9 @@ import wanted.backend.domain.vo.Money;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class JobOpening extends BaseTimeEntity {
-    @Id @GeneratedValue
+
+    @Id
+    @GeneratedValue
     @Column(name = "id")
     private Long id;
     @Column(name = "title", nullable = false)
@@ -42,7 +44,8 @@ public class JobOpening extends BaseTimeEntity {
     private Company company;
 
     @Builder
-    public JobOpening(String title, String position, Long reward, String description, String techStack, Company company) {
+    public JobOpening(String title, String position, Long reward, String description,
+        String techStack, Company company) {
         validate(title, position, techStack, company);
 
         this.title = title;
@@ -69,7 +72,9 @@ public class JobOpening extends BaseTimeEntity {
     }
 
     private void validateTechStack(String techStack) {
-        if(isBlank(techStack)) return;
+        if (isBlank(techStack)) {
+            return;
+        }
         checkArgument(techStack.length() <= 255, "기술 스택은 255자 이하여야 합니다.");
     }
 

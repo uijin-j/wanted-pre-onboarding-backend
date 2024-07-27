@@ -19,7 +19,9 @@ import wanted.backend.domain.vo.Address;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Company extends BaseTimeEntity {
-    @Id @GeneratedValue
+
+    @Id
+    @GeneratedValue
     @Column(name = "id")
     private Long id;
     @Column(name = "name", length = 50, nullable = false)
