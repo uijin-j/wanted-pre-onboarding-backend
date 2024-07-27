@@ -46,7 +46,10 @@ public class JobOpening extends BaseTimeEntity {
     @Builder
     public JobOpening(String title, String position, Long reward, String description,
         String techStack, Company company) {
-        validate(title, position, techStack, company);
+        validateTitle(title);
+        validatePosition(position);
+        validateTechStack(techStack);
+        validateCompany(company);
 
         this.title = title;
         this.position = position;
@@ -58,13 +61,6 @@ public class JobOpening extends BaseTimeEntity {
 
     public Long getReward() {
         return reward.getAmount();
-    }
-
-    private void validate(String title, String position, String techStack, Company company) {
-        validateTitle(title);
-        validatePosition(position);
-        validateTechStack(techStack);
-        validateCompany(company);
     }
 
     private void validateCompany(Company company) {
