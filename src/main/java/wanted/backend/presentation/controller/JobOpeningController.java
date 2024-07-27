@@ -22,14 +22,16 @@ public class JobOpeningController {
     private final JobOpeningService jobOpeningService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<JobOpeningResponse> createJobOpening(
         @RequestBody @Valid JobOpeningCreateRequest request
     ) {
         JobOpeningResponse response = jobOpeningService.post(request);
-        return ApiResponse.ok(response);
+        return ApiResponse.of(HttpStatus.CREATED, response);
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public ApiResponse<JobOpeningResponse> updateJobOpening(
         @PathVariable Long id,
         @RequestBody @Valid JobOpeningUpdateRequest request
