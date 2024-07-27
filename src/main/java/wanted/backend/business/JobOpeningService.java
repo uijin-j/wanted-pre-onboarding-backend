@@ -27,9 +27,7 @@ public class JobOpeningService {
 
     @Transactional
     public JobOpeningResponse post(JobOpeningCreateRequest request) {
-        Company company = comanyRepository.findById(request.companyId())
-            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회사입니다."));
-
+        Company company = getCompany(request);
         JobOpening jobOpening = JobOpening.builder()
             .company(company)
             .title(request.title())
@@ -44,10 +42,9 @@ public class JobOpeningService {
 
     @Transactional
     public JobOpeningResponse update(Long id, JobOpeningUpdateRequest request) {
-        JobOpening jobOpening = jobOpeningRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 채용공고입니다."));
+        JobOpening jobOpening = getJobOpening(id);
 
-        jobOpening.updateJobOpening(request);
+        jobOpening.update(request);
 
         return JobOpeningResponse.from(jobOpening);
     }
@@ -63,12 +60,20 @@ public class JobOpeningService {
     }
 
     public JobOpeningDetail getInfo(Long id) {
-        JobOpening jobOpening = jobOpeningRepository.findByIdWithCompany(id)
-            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 채용공고입니다."));
-
+        JobOpening jobOpening = getJobOpening(id);
         List<Long> otherJobOpeningIds = getOthersForCompany(jobOpening);
 
         return JobOpeningDetail.of(jobOpening, otherJobOpeningIds);
+    }
+
+    private Company getCompany(JobOpeningCreateRequest request) {
+        return comanyRepository.findById(request.companyId())
+            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회사입니다."));
+    }
+
+    private JobOpening getJobOpening(Long id) {
+        return jobOpeningRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 채용공고입니다."));
     }
 
     private List<Long> getOthersForCompany(JobOpening jobOpening) {

@@ -24,10 +24,8 @@ public class ApplicationService {
 
     @Transactional
     public ApplyResponse apply(ApplyRequest request) {
-        JobOpening jobOpening = jobOpeningRepository.findById(request.jobOpeningId())
-            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 채용공고입니다."));
-        User user = userRepository.findById(request.userId())
-            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 사용자입니다."));
+        JobOpening jobOpening = getJobOpening(request);
+        User user = getUser(request);
 
         checkDuplicateApply(user, jobOpening);
 
@@ -39,7 +37,17 @@ public class ApplicationService {
         return ApplyResponse.from(applicationRepository.save(application));
     }
 
-    public void checkDuplicateApply(User user, JobOpening jobOpening) {
+    private User getUser(ApplyRequest request) {
+        return userRepository.findById(request.userId())
+            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 사용자입니다."));
+    }
+
+    private JobOpening getJobOpening(ApplyRequest request) {
+        return jobOpeningRepository.findById(request.jobOpeningId())
+            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 채용공고입니다."));
+    }
+
+    private void checkDuplicateApply(User user, JobOpening jobOpening) {
         if (applicationRepository.existsByApplicantAndJobOpening(user, jobOpening)) {
             throw new IllegalArgumentException("이미 지원한 채용공고입니다.");
         }
