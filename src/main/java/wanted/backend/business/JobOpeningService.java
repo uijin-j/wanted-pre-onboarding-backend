@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import wanted.backend.domain.Company;
 import wanted.backend.domain.JobOpening;
 import wanted.backend.dto.request.JobOpeningCreateRequest;
+import wanted.backend.dto.request.JobOpeningUpdateRequest;
 import wanted.backend.dto.response.JobOpeningResponse;
 import wanted.backend.persistence.CompanyRepository;
 import wanted.backend.persistence.JobOpeningRepository;
@@ -34,5 +35,15 @@ public class JobOpeningService {
             .build();
 
         return JobOpeningResponse.from(jobOpeningRepository.save(jobOpening));
+    }
+
+    @Transactional
+    public JobOpeningResponse updateJobOpening(Long id, JobOpeningUpdateRequest request) {
+        JobOpening jobOpening = jobOpeningRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 채용공고입니다."));
+
+        jobOpening.updateJobOpening(request);
+
+        return JobOpeningResponse.from(jobOpening);
     }
 }

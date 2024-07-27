@@ -18,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wanted.backend.domain.common.BaseTimeEntity;
 import wanted.backend.domain.vo.Money;
+import wanted.backend.dto.request.JobOpeningUpdateRequest;
 
 @Entity
 @Getter
@@ -57,6 +58,17 @@ public class JobOpening extends BaseTimeEntity {
         this.description = description;
         this.techStack = techStack;
         this.company = company;
+    }
+
+    public void updateJobOpening(JobOpeningUpdateRequest request) {
+        validateTitle(request.title());
+        validatePosition(request.position());
+        validateTechStack(request.techStack());
+
+        this.title = request.title();
+        this.position = request.position();
+        this.reward = Money.from(request.reward());
+        this.description = request.description();
     }
 
     public Long getReward() {
