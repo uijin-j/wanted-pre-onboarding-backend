@@ -2,6 +2,7 @@ package wanted.backend.domain.vo;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -42,10 +43,12 @@ public class Address {
     }
 
     private void validateCountry(String country) {
+        checkArgument(nonNull(country), "국가는 필수값입니다.");
         checkArgument(country.length() <= 255, "국가는 255자 이하여야 합니다.");
     }
 
     private void validateCity(String city) {
+        checkArgument(nonNull(city), "도시는 필수값입니다.");
         checkArgument(city.length() <= 255, "지역은 255자 이하여야 합니다.");
     }
 }
