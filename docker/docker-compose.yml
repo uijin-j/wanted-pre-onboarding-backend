@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  mysql:
+    container_name: wanted-mysql
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: wanted
+      MYSQL_USER: wanted
+      MYSQL_PASSWORD: password12!
+      MYSQL_ROOT_PASSWORD: password12!
+      TZ: Asia/Seoul
+    ports:
+      - "3406:3306"
