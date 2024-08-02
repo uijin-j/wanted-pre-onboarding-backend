@@ -51,7 +51,8 @@ public class JobOpeningService {
 
     @Transactional
     public void delete(Long id) {
-        jobOpeningRepository.findById(id).ifPresent(jobOpeningRepository::delete);
+        jobOpeningRepository.findById(id)
+            .ifPresent(jobOpeningRepository::delete);
     }
 
     public Page<JobOpeningSummary> getJobOpenings(Pageable pageable) {
