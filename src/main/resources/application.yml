@@ -1,3 +1,15 @@
 spring:
-  profiles:
-    active: local
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3406/wanted
+    username: wanted
+    password: password12!
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
