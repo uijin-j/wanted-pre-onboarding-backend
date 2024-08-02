@@ -22,7 +22,7 @@ import wanted.backend.persistence.JobOpeningRepository;
 @RequiredArgsConstructor
 public class JobOpeningService {
 
-    private final CompanyRepository comanyRepository;
+    private final CompanyRepository companyRepository;
     private final JobOpeningRepository jobOpeningRepository;
 
     @Transactional
@@ -67,7 +67,7 @@ public class JobOpeningService {
     }
 
     private Company getCompany(JobOpeningCreateRequest request) {
-        return comanyRepository.findById(request.companyId())
+        return companyRepository.findById(request.companyId())
             .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회사입니다."));
     }
 
