@@ -16,7 +16,7 @@ class AddressTest {
 
     @DisplayName("나라명과 도시명으로 주소를 생성할 수 있다")
     @Test
-    void create() {
+    void createAddress() {
         // given
         String country = faker.address().country();
         String city = faker.address().city();
@@ -67,5 +67,31 @@ class AddressTest {
         assertThatThrownBy(() -> Address.of(city, null))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("도시는 필수값입니다.");
+    }
+
+    @DisplayName("나라명은 255자를 넘을 수 없다")
+    @Test
+    void createAddressWithNameOver255() {
+        // given
+        String country = faker.lorem().fixedString(256);
+        String city = faker.address().city();
+
+        // when & then
+        assertThatThrownBy(() -> Address.of(country, city))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("국가는 255자 이하여야 합니다.");
+    }
+
+    @DisplayName("도시명은 255자를 넘을 수 없다")
+    @Test
+    void createAddressWithCityOver255() {
+        // given
+        String country = faker.address().country();
+        String city = faker.lorem().fixedString(256);
+
+        // when & then
+        assertThatThrownBy(() -> Address.of(country, city))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("도시는 255자 이하여야 합니다.");
     }
 }
