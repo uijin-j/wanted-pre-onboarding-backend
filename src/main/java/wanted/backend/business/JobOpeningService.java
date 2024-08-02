@@ -27,7 +27,7 @@ public class JobOpeningService {
 
     @Transactional
     public JobOpeningResponse post(JobOpeningCreateRequest request) {
-        Company company = getCompany(request);
+        Company company = getCompany(request.companyId());
         JobOpening jobOpening = JobOpening.builder()
             .company(company)
             .title(request.title())
@@ -66,8 +66,8 @@ public class JobOpeningService {
         return JobOpeningDetail.of(jobOpening, otherJobOpeningIds);
     }
 
-    private Company getCompany(JobOpeningCreateRequest request) {
-        return companyRepository.findById(request.companyId())
+    private Company getCompany(Long companyId) {
+        return companyRepository.findById(companyId)
             .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회사입니다."));
     }
 
