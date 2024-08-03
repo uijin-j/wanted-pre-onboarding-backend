@@ -72,6 +72,7 @@ public class JobOpening extends BaseTimeEntity {
         this.position = request.position();
         this.reward = isNull(reward) ? null : Money.from(request.reward());
         this.description = request.description();
+        this.techStack = request.techStack();
     }
 
     public Long getReward() {
