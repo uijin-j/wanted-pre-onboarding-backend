@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 import wanted.backend.domain.Company;
 import wanted.backend.domain.JobOpening;
 import wanted.backend.dto.request.JobOpeningCreateRequest;
@@ -28,6 +29,7 @@ import wanted.backend.persistence.CompanyRepository;
 import wanted.backend.persistence.JobOpeningRepository;
 
 @SpringBootTest
+@Transactional
 class JobOpeningServiceTest {
 
     static final Faker faker = new Faker(Locale.KOREA);

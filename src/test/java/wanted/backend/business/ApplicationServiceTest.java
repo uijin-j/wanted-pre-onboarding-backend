@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import wanted.backend.domain.Application;
 import wanted.backend.domain.Company;
 import wanted.backend.domain.JobOpening;
@@ -24,6 +25,7 @@ import wanted.backend.persistence.JobOpeningRepository;
 import wanted.backend.persistence.UserRepository;
 
 @SpringBootTest
+@Transactional
 class ApplicationServiceTest {
 
     static final Faker faker = new Faker(Locale.KOREA);
