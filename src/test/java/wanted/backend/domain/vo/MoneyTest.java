@@ -26,13 +26,15 @@ class MoneyTest {
             .hasFieldOrPropertyWithValue("amount", amount);
     }
 
-    @DisplayName("금액 없이 돈을 생성할 수 없다")
+    @DisplayName("금액 없으면 0원으로 생성한다")
     @Test
     void createMoneyWithoutAmount() {
-        // when & then
-        assertThatThrownBy(() -> Money.from(null))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("금액은 필수값입니다.");
+        // when
+        Money money = Money.from(null);
+
+        // then
+        assertThat(money)
+            .hasFieldOrPropertyWithValue("amount", 0L);
     }
 
 

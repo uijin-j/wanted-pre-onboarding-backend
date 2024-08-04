@@ -1,6 +1,7 @@
 package wanted.backend.domain.vo;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 import jakarta.persistence.Column;
@@ -25,6 +26,10 @@ public class Money {
     }
 
     public static Money from(Long amount) {
+        if (isNull(amount)) {
+            return ZERO;
+        }
+
         return new Money(amount);
     }
 

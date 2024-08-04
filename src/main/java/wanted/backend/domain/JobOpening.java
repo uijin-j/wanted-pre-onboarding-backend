@@ -2,7 +2,6 @@ package wanted.backend.domain;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static io.micrometer.common.util.StringUtils.isBlank;
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 import jakarta.persistence.Column;
@@ -57,7 +56,7 @@ public class JobOpening extends BaseTimeEntity {
 
         this.title = title;
         this.position = position;
-        this.reward = isNull(reward) ? null : Money.from(reward);
+        this.reward = Money.from(reward);
         this.description = description;
         this.techStack = techStack;
         this.company = company;
@@ -70,7 +69,7 @@ public class JobOpening extends BaseTimeEntity {
 
         this.title = request.title();
         this.position = request.position();
-        this.reward = isNull(reward) ? null : Money.from(request.reward());
+        this.reward = Money.from(request.reward());
         this.description = request.description();
         this.techStack = request.techStack();
     }
