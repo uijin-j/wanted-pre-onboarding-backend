@@ -7,7 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import wanted.backend.domain.Company;
 import wanted.backend.domain.JobOpening;
 
-public interface JobOpeningRepository extends JpaRepository<JobOpening, Long> {
+public interface JobOpeningRepository extends JpaRepository<JobOpening, Long>,
+    JobOpeningSearchRepository {
 
     @Query("SELECT j FROM JobOpening j JOIN FETCH j.company WHERE j.id = :id")
     Optional<JobOpening> findByIdWithCompany(Long id);

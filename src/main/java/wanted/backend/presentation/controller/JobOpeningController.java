@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import wanted.backend.business.JobOpeningService;
 import wanted.backend.dto.request.JobOpeningCreateRequest;
+import wanted.backend.dto.request.JobOpeningSearch;
 import wanted.backend.dto.request.JobOpeningUpdateRequest;
 import wanted.backend.dto.response.JobOpeningDetail;
 import wanted.backend.dto.response.JobOpeningResponse;
@@ -59,6 +60,13 @@ public class JobOpeningController {
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<Page<JobOpeningSummary>> getJobOpenings(Pageable pageable) {
         Page<JobOpeningSummary> response = jobOpeningService.getJobOpenings(pageable);
+        return ApiResponse.ok(response);
+    }
+
+    @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse<Page<JobOpeningSummary>> search(JobOpeningSearch search) {
+        Page<JobOpeningSummary> response = jobOpeningService.search(search);
         return ApiResponse.ok(response);
     }
 

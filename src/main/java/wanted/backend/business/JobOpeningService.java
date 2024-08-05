@@ -4,12 +4,14 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wanted.backend.domain.Company;
 import wanted.backend.domain.JobOpening;
 import wanted.backend.dto.request.JobOpeningCreateRequest;
+import wanted.backend.dto.request.JobOpeningSearch;
 import wanted.backend.dto.request.JobOpeningUpdateRequest;
 import wanted.backend.dto.response.JobOpeningDetail;
 import wanted.backend.dto.response.JobOpeningResponse;
@@ -86,5 +88,11 @@ public class JobOpeningService {
 
     private List<Long> getAllByCompany(Company company) {
         return jobOpeningRepository.findIdsByCompany(company);
+    }
+
+    public Page<JobOpeningSummary> search(JobOpeningSearch search) {
+        PageRequest pageable = PageRequest.of(search.offset(), search.size());
+        return jobOpeningRepository.search(search.keyword(), pageable)
+            .map(JobOpeningSummary::from);
     }
 }
