@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import wanted.backend.domain.Company;
 import wanted.backend.domain.JobOpening;
 import wanted.backend.dto.request.JobOpeningCreateRequest;
+import wanted.backend.dto.request.JobOpeningSearch;
 import wanted.backend.dto.request.JobOpeningUpdateRequest;
 import wanted.backend.dto.response.JobOpeningDetail;
 import wanted.backend.dto.response.JobOpeningResponse;
@@ -279,6 +280,52 @@ class JobOpeningServiceTest {
             assertThat(content)
                 .extracting("id")
                 .containsExactlyInAnyOrder(jobOpening1.getId(), jobOpening2.getId());
+        }
+    }
+
+    @Nested
+    class 채용공고_검색_테스트 {
+
+        String keyword;
+        JobOpening jobOpening1;
+        JobOpening jobOpening2;
+        JobOpening jobOpening3;
+
+        @BeforeEach
+        void setUp() {
+            keyword = faker.lorem().word();
+            jobOpening1 = createJobOpening(keyword, description, position);
+            jobOpening2 = createJobOpening(title, keyword, position);
+            jobOpening3 = createJobOpening(title, description, position);
+
+            jobOpeningRepository.saveAll(List.of(jobOpening1, jobOpening2, jobOpening3));
+        }
+
+        @DisplayName("키워드로 채용공고를 검색할 수 있다")
+        @Test
+        void searchJobOpenings() {
+            // given
+            JobOpeningSearch request = new JobOpeningSearch(keyword, 0, 10);
+
+            // when
+            Page<JobOpeningSummary> actual = jobOpeningService.search(request);
+
+            // then
+            assertThat(actual).hasSize(2);
+            assertThat(actual)
+                .extracting("id")
+                .containsExactlyInAnyOrder(jobOpening1.getId(), jobOpening2.getId());
+        }
+
+        private JobOpening createJobOpening(String title, String description, String position) {
+            return JobOpening.builder()
+                .company(company)
+                .title(title)
+                .position(position)
+                .reward(reward)
+                .description(description)
+                .techStack(techStack)
+                .build();
         }
     }
 
