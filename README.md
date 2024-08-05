@@ -12,10 +12,7 @@
 - 회사는 채용공고를 생성하고, 이에 사용자는 지원합니다.
 
 ## ERD
-
-추후 업로드 예정
-
----
+<img width="739" alt="스크린샷 2024-08-05 16 15 46" src="https://github.com/user-attachments/assets/71921bdd-3947-4c0f-861f-792c498d4a5b">
 
 ## 📂 서비스 주요 기능
 
