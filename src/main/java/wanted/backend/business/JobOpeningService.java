@@ -62,6 +62,12 @@ public class JobOpeningService {
             .map(JobOpeningSummary::from);
     }
 
+    public Page<JobOpeningSummary> search(JobOpeningSearch search) {
+        PageRequest pageable = PageRequest.of(search.offset(), search.size());
+        return jobOpeningRepository.search(search.keyword(), pageable)
+            .map(JobOpeningSummary::from);
+    }
+
     public JobOpeningDetail getInfo(Long id) {
         JobOpening jobOpening = getJobOpening(id);
         List<Long> otherJobOpeningIds = getOthersForCompany(jobOpening);
@@ -88,11 +94,5 @@ public class JobOpeningService {
 
     private List<Long> getAllByCompany(Company company) {
         return jobOpeningRepository.findIdsByCompany(company);
-    }
-
-    public Page<JobOpeningSummary> search(JobOpeningSearch search) {
-        PageRequest pageable = PageRequest.of(search.offset(), search.size());
-        return jobOpeningRepository.search(search.keyword(), pageable)
-            .map(JobOpeningSummary::from);
     }
 }
